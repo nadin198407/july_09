@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework</title>
+</head>
+<body>
+    <!-- Создайте страницу которая запрашивает имя пользователя, если пользователь вводит "Admin" либо "admin" он попадает на страницу, которая оповещает его о том что " Пользоваетль Admin(не статическая строка, а данные что ввел пользователь) вошел в систему" а рядом разместите кнопку "Выход" которая вернет пользователя к модальному окну ввода логина. Реализуйте код как для куки так и для localstorage. -->
+   
+    	
+    	<div id="textbox"></div>
+    
+    <script type="text/javascript">
+    	(window.addEventListener("load", function(){
+    		var key = "login";
+    		
+    		function setUser () {
+	    		var nameAdmin = prompt("Введите Ваш логин, плз", "");
+	    		if (nameAdmin == "admin" || nameAdmin == "Admin"){
+	    			window.localStorage.setItem("key", nameAdmin);
+	    			setCookie(nameAdmin);
+	    			showWindow();
+	    		} 
+	    		else setUser();
+	    		};
+
+	    	if (getCookie(key) == "admin" || getCookie(key) == "Admin") {
+            	showWindow();
+	        }
+	        else {
+	            setUser();
+	        };
+
+	        function setCookie(login) {
+	        	var cookieLogin = "key=" + key + ";";
+	        	document.cookie = cookieLogin;
+	        };                                                        
+
+    		
+	        function getCookie(cookieName){
+
+				var name_cookie = cookieName + "=";
+	        	var cookieArray = document.cookie.split(";");
+	        	
+				for (var i = 0; i < cookieArray.length; i++) {
+	      			var cookieItem = cookieArray[i];
+	      			var pos = cookieItem.indexOf(name_cookie);
+	      			 while (cookieItem.charAt(0)==' ') {
+                    cookieItem = cookieItem.substring(1);
+                };
+	      			if (pos != -1){
+	      				return cookieItem.substring(name_cookie.length, cookieArray.length);
+	        			}
+					};
+					return "";
+				};
+
+	        function cookieDelete(cookie_name){
+	        	document.cookie = cookie_name + "= ;";
+	        };
+
+    		function showWindow(){
+    			var nameUser = getCookie(key);
+    			document.getElementById('textbox').innerHTML = "Пользователь "+ nameUser + " вошел в систему";
+    			document.getElementById('textbox').insertAdjacentHTML("beforeEnd", '<button id="newset">Выход</button>');
+			};
+
+			 var startInput = document.getElementById('newset');
+			 startInput.addEventListener("click", function () {
+			 	cookieDelete(key);
+			 	location.reload();
+			 });
+
+
+                }
+    	))
+    </script>
+</body>
+
+</html>

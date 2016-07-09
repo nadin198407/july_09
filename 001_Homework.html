@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework</title>
+</head>
+<body>
+    <!-- Создайте страницу которая запрашивает имя пользователя, если пользователь вводит "Admin" либо "admin" он попадает на страницу, которая оповещает его о том что " Пользоваетль Admin(не статическая строка, а данные что ввел пользователь) вошел в систему" а рядом разместите кнопку "Выход" которая вернет пользователя к модальному окну ввода логина. Реализуйте код как для куки так и для localstorage. -->
+   
+    	
+    	<div id="textbox"></div>
+    
+    <script type="text/javascript">
+    	(window.addEventListener("load", function(){
+    		var key = "login";
+    		
+    		function setUser(){
+	    		var nameAdmin = prompt("Введите Ваш логин, плз", "");
+	    		if (nameAdmin == "admin" || nameAdmin == "Admin"){
+	    			window.localStorage.setItem("key", nameAdmin);
+	    			showWindow();
+	    		} 
+	    		else setUser();
+	    	};
+
+	    	if (window.localStorage.getItem(key) == "admin" || window.localStorage.getItem(key) == "Admin") {
+            showWindow();
+	        }
+	        else {
+	            setUser();
+	        }
+
+
+
+    		function showWindow(){
+    			var nameUser = window.localStorage.getItem("key");
+    			document.getElementById('textbox').innerHTML = "Пользователь "+ nameUser + " вошел в систему";
+    			document.getElementById('textbox').insertAdjacentHTML("beforeEnd", '<button id="newset">Выход</button>');
+			};
+
+			 var startInput = document.getElementById('newset');
+			 startInput.addEventListener("click", function () {
+			 	window.localStorage.removeItem(key);
+			 	location.reload();
+			 });
+
+
+    	}))
+    </script>
+</body>
+
+</html>

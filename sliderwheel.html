@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <style>
+    .slide
+    {
+        
+    }
+
+    .slider-list {
+        overflow: hidden;
+        height: 200px;
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .slider-move{
+        
+
+    }
+    
+    .slider-list img {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .-active {
+        opacity: .5
+    }
+    </style>
+    <div class="slide">
+        <div class="slider-list">
+            <div class="slider-move">
+                <img src="images/1.jpg" alt="">
+                <img src="images/2.jpg" alt="">
+                <img src="images/3.jpg" alt="">
+                <img src="images/4.jpg" alt="">
+                <img src="images/5.jpg" alt="">
+                <img src="images/1.jpg" alt="">
+                <img src="images/2.jpg" alt="">
+            </div>
+        </div>
+    </div>
+    <script>
+        function Slider(elem){
+            this.elem = elem;
+            this.addEventListener();
+
+        }
+
+        Slider.prototype.addEventListener = function () {
+        
+        if (this.elem.addEventListener) {//если есть событие на элементе в объекте слайдер
+          if ('onwheel' in document) {//если есть событие onwheel в документе c поддержкой IE9+, FF17+, Ch31+
+            // IE9+, FF17+, Ch31+
+            this.elem.addEventListener("wheel", this.wheelOn.bind(this));//тогда при прокручивании мышкой выполняется обработчик
+          } else if ('onmousewheel' in document) {// в ином случае, если есть событие onmousewheel в док, при прокручивании выполняется этот же обработчик
+            // устаревший вариант события
+            this.elem.addEventListener("mousewheel", this.wheelOn.bind(this));
+          } else {//в ином при событии MozMousePixelScroll выполняется этот же обработчик
+            // Firefox < 17
+            this.elem.addEventListener("MozMousePixelScroll", this.wheelOn.bind(this));
+          }
+        } else { // IE8-//если меньше 8 ИЕ при событии onmousewheel выполняется этот обработчик
+          this.elem.attachEvent("onmousewheel", this.wheelOn.bind(this));
+        } }
+        //обработчик события для мыши
+
+        Slider.prototype.wheelOn = function (event){
+            var event = event  || window.event;
+
+            if(event.wheelDelta< 0){
+                this.elem.appendChild(this.elem.firstElementChild);
+            } else {
+                this.elem.insertBefore(this.elem.lastElementChild, this.elem.firstElementChild);
+            }
+        } 
+
+        new Slider(document.querySelector('.slider-move'));
+        
+
+
+
+
+        
+    
+    </script>
+</body>
+
+</html>
